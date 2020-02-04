@@ -1,0 +1,51 @@
+syntax="proto3";
+
+package calc;
+option go_package="calcpb";
+
+message AddRequest {
+  int32 X = 1;
+  int32 Y = 2;
+}
+
+message AddResponse {
+  int32 result = 1;
+}
+
+message PrimeRequest {
+  int64 X = 1;
+}
+
+message PrimeResponse {
+  int64 prime_factor = 1;
+}
+
+message AverageRequest {
+  float X = 1;
+}
+
+message AverageResponse {
+  float average = 1;
+}
+
+message MaximumRequest {
+  int64 X = 1;
+}
+
+message MaximumResponse {
+  int64 maximum = 1;
+}
+
+service CalculatorService {
+  //unary
+  rpc AddNumbers(AddRequest) returns (AddResponse) {};
+
+  //stream
+  rpc PrimeNumberDecomposition(PrimeRequest) returns (stream PrimeResponse) {};
+
+  //client steam
+  rpc ComputeAverage(stream AverageRequest) returns (AverageResponse) {};
+
+  //bidi steam
+  rpc FindMaximum(stream MaximumRequest) returns (stream MaximumResponse) {};
+}
